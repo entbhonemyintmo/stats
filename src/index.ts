@@ -2,8 +2,9 @@ import fs from "fs";
 import { CsvFileReader } from "./CsvFileReader";
 import { MatchResult } from "./MatchResult";
 import http from "http";
+import { MatchFileReader } from "./MatchFileReader";
 
-const reader = new CsvFileReader("./data/football.csv");
+const reader = new MatchFileReader("./data/football.csv");
 reader.read();
 
 let manUWin = 0;
