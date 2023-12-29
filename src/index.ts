@@ -1,14 +1,10 @@
 import fs from "fs";
 import { CsvFileReader } from "./CsvFileReader";
+import { MatchResult } from "./MatchResult";
+import http from "http";
 
 const reader = new CsvFileReader("./data/football.csv");
 reader.read();
-
-enum MatchResult {
-  HOME_WIN = "H",
-  AWAY_WIN = "A",
-  DRAW = "D",
-}
 
 let manUWin = 0;
 for (let match of reader.data) {
@@ -20,3 +16,11 @@ for (let match of reader.data) {
 }
 
 console.log(`Man U win matches ${manUWin}.`);
+
+const server = http.createServer((req, res) => {
+  res.end("hi there!, you are reaching out to the http server...");
+});
+
+server.listen(8000, "127.0.0.1", () =>
+  console.log("server is runing on port 8000...")
+);
