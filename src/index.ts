@@ -1,11 +1,16 @@
-import fs from "fs";
-import { CsvFileReader } from "./CsvFileReader";
-import { MatchResult } from "./MatchResult";
 import http from "http";
-import { MatchFileReader } from "./MatchFileReader";
+import { MatchResult } from "./MatchResult..enum";
+// import { MatchFileReader } from "./inheritance/MatchFileReader";
+import { CsvFileReader } from "./composition/CsvFileReader";
+import { MatchFileReader } from "./composition/MatchFileReader";
 
-const reader = new MatchFileReader("./data/football.csv");
-reader.read();
+// with the inheritance approach
+// const reader = new MatchFileReader("./data/football.csv");
+// reader.read();
+
+// with the composition approach
+const reader = new MatchFileReader(new CsvFileReader("./data/football.csv"));
+reader.load();
 
 let manUWin = 0;
 for (let match of reader.data) {
@@ -19,7 +24,7 @@ for (let match of reader.data) {
 console.log(`Man U win matches ${manUWin}.`);
 
 const server = http.createServer((req, res) => {
-  res.end("hi there!, you are reaching out to the http server...");
+  res.end(`Man U win matches ${manUWin}.`);
 });
 
 server.listen(8000, "127.0.0.1", () =>
