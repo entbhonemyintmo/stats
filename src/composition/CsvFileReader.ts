@@ -1,5 +1,5 @@
 import fs from "fs";
-import { DataReader } from "./DataReader.interface";
+import { DataReader } from "./interfaces";
 
 export class CsvFileReader implements DataReader {
   raw_data: string[][] = [];

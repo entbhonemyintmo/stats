@@ -1,8 +1,8 @@
-import { MatchResult } from "../MatchResult..enum";
+import { MatchResult } from "../MatchResult.enum";
 import { dateStringToDate } from "../utils";
-import { DataReader } from "./DataReader.interface";
+import { DataReader } from "./interfaces";
 
-type MatchData = [Date, string, string, number, number, MatchResult];
+export type MatchData = [Date, string, string, number, number, MatchResult];
 
 export class MatchFileReader {
   data: MatchData[] = [];

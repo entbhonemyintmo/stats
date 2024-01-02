@@ -1,8 +1,10 @@
 import http from "http";
-import { MatchResult } from "./MatchResult..enum";
 // import { MatchFileReader } from "./inheritance/MatchFileReader";
 import { CsvFileReader } from "./composition/CsvFileReader";
 import { MatchFileReader } from "./composition/MatchFileReader";
+import { Summarizer } from "./composition/Summarizer";
+import { WinsAnalysis } from "./composition/analyzers/WinsAlanysis";
+import { ConsoleReport } from "./composition/reportTargets/PrintConsole";
 
 // with the inheritance approach
 // const reader = new MatchFileReader("./data/football.csv");
@@ -12,19 +14,15 @@ import { MatchFileReader } from "./composition/MatchFileReader";
 const reader = new MatchFileReader(new CsvFileReader("./data/football.csv"));
 reader.load();
 
-let manUWin = 0;
-for (let match of reader.data) {
-  if (match[1] === "Man United" && match[5] === MatchResult.HOME_WIN) {
-    manUWin++;
-  } else if (match[2] === "Man United" && match[5] === MatchResult.AWAY_WIN) {
-    manUWin++;
-  }
-}
+const summary = new Summarizer(
+  new WinsAnalysis("Man United"),
+  new ConsoleReport()
+);
 
-console.log(`Man U win matches ${manUWin}.`);
+summary.buildAndPrintReport(reader.data);
 
 const server = http.createServer((req, res) => {
-  res.end(`Man U win matches ${manUWin}.`);
+  res.end(`server is runing on port 8000...`);
 });
 
 server.listen(8000, "127.0.0.1", () =>
