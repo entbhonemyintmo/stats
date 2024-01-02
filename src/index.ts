@@ -11,14 +11,10 @@ import { ConsoleReport } from "./composition/reportTargets/PrintConsole";
 // reader.read();
 
 // with the composition approach
-const reader = new MatchFileReader(new CsvFileReader("./data/football.csv"));
+const reader = MatchFileReader.fromCsv("./data/football.csv");
 reader.load();
 
-const summary = new Summarizer(
-  new WinsAnalysis("Man United"),
-  new ConsoleReport()
-);
-
+const summary = Summarizer.winsAnalysisWithHtmlReport("Man United");
 summary.buildAndPrintReport(reader.data);
 
 const server = http.createServer((req, res) => {
